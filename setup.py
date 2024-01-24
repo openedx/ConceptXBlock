@@ -82,7 +82,7 @@ def is_requirement(line):
 
 setup(
     name='concept-xblock',
-    version='0.2.0',
+    version='0.3.0',
     description='concept XBlock',   # TODO: write a better description.
     packages=[
         'concept',
