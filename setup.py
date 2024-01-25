@@ -84,7 +84,7 @@ setup(
     name='concept-xblock',
     version='0.3.2',
     description='concept XBlock',   # TODO: write a better description.
-    long_description='This is a simple XBlock which will allows one to tag problems with concepts.',
+    long_description=open('README.md', encoding='utf-8').read(),  # pylint: disable=consider-using-with
     long_description_content_type='text/x-rst',
     packages=[
         'concept',
