@@ -84,8 +84,8 @@ setup(
     name='concept-xblock',
     version='0.3.1',
     description='concept XBlock',   # TODO: write a better description.
-    long_description='This is a simple XBlock which will allows one to tag problems with concepts.'
-    long_description_content_type='text/x-rst'
+    long_description='This is a simple XBlock which will allows one to tag problems with concepts.',
+    long_description_content_type='text/x-rst',
     packages=[
         'concept',
     ],
