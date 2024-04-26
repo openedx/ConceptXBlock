@@ -8,7 +8,11 @@ import json
 import pkg_resources
 from xblock.core import XBlock
 from xblock.fields import Integer, Scope, String
-from xblock.fragment import Fragment
+try:
+    from web_fragments.fragment import Fragment
+except:
+    # for backwards compatibility with quince and prior releases
+    from xblock.fragment import Fragment
 
 import requests
 
