@@ -5,7 +5,7 @@ many ways an easier environment where to do this."""
 
 import json
 
-import pkg_resources
+import importlib.resources
 from xblock.core import XBlock
 from xblock.fields import Integer, Scope, String
 from xblock.fragment import Fragment
@@ -43,8 +43,8 @@ class ConceptXBlock(XBlock):
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(__name__, path)
-        return data.decode("utf8")
+        data = importlib.resources.files(__package__).joinpath(path)
+        return data.read_text(encoding="utf-8")
 
     def student_view(self, context=None):
         """
@@ -79,8 +79,8 @@ class ConceptXBlock(XBlock):
 
     def studio_view(self, context=None):
         frag = Fragment(self.resource_string("static/html/studio_hack.html"))
-        frag.add_javascript(pkg_resources.resource_string(__name__, "static/js/oa_server.js"))
-        frag.add_javascript(pkg_resources.resource_string(__name__, "static/js/oa_edit.js"))
+        frag.add_javascript(importlib.resources.files(__package__).joinpath("static/js/oa_server.js"))
+        frag.add_javascript(importlib.resources.files(__package__).joinpath("static/js/oa_edit.js"))
         return frag
 
     # TO-DO: change this to create the scenarios you'd like to see in the
