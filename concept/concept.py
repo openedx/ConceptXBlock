@@ -7,10 +7,18 @@ import json
 
 import importlib.resources
 from xblock.core import XBlock
-from xblock.fields import Integer, Scope, String
+from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
+try:
+    from xblock.utils.resources import ResourceLoader
+except ModuleNotFoundError:
+    from xblockutils.resources import ResourceLoader
+
 import requests
+
+
+loader = ResourceLoader(__name__)
 
 
 class ConceptXBlock(XBlock):
@@ -43,8 +51,7 @@ class ConceptXBlock(XBlock):
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = importlib.resources.files(__package__).joinpath(path)
-        return data.read_text(encoding="utf-8")
+        return loader.load_unicode(path)
 
     def student_view(self, context=None):
         """
