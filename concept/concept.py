@@ -5,12 +5,20 @@ many ways an easier environment where to do this."""
 
 import json
 
-import pkg_resources
+import importlib.resources
 from xblock.core import XBlock
-from xblock.fields import Integer, Scope, String
+from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
+try:
+    from xblock.utils.resources import ResourceLoader
+except ModuleNotFoundError:
+    from xblockutils.resources import ResourceLoader
+
 import requests
+
+
+loader = ResourceLoader(__name__)
 
 
 class ConceptXBlock(XBlock):
@@ -43,8 +51,7 @@ class ConceptXBlock(XBlock):
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(__name__, path)
-        return data.decode("utf8")
+        return loader.load_unicode(path)
 
     def student_view(self, context=None):
         """
@@ -79,8 +86,8 @@ class ConceptXBlock(XBlock):
 
     def studio_view(self, context=None):
         frag = Fragment(self.resource_string("static/html/studio_hack.html"))
-        frag.add_javascript(pkg_resources.resource_string(__name__, "static/js/oa_server.js"))
-        frag.add_javascript(pkg_resources.resource_string(__name__, "static/js/oa_edit.js"))
+        frag.add_javascript(importlib.resources.files(__package__).joinpath("static/js/oa_server.js"))
+        frag.add_javascript(importlib.resources.files(__package__).joinpath("static/js/oa_edit.js"))
         return frag
 
     # TO-DO: change this to create the scenarios you'd like to see in the
